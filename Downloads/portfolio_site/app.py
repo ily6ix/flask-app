@@ -23,5 +23,5 @@ def projects():
 def contact():
     return render_template('contact.html',bio=data.bio)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+##if __name__ == '__main__':
+##    app.run(debug=True)
