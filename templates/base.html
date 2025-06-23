@@ -2,160 +2,147 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{ bio.name }} – Portfolio</title>
+  <title><span class="text-primary">{{ bio.name }}</span> – Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --primary: #2a66cc;         /* new bright blue */
+      --secondary: #4a5a7b;       /* muted navy */
+      --dark: #1f2937;
+      --light: #f7f7f7;
+      --nav-text: #224b8e;        /* navy blue for nav items */
+      --hover-shadow: rgba(42, 102, 204, 0.4); /* lighter navy shadow */
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background: #f8f9fa;
+      font-family: 'Roboto', sans-serif;
+      background: var(--light);
+      color: #333;
       margin: 0;
-      padding-top: 80px; /* Offset for fixed navbar */
+      padding-top: 70px;
     }
 
+    h1, h2, h3, .navbar-brand {
+      color: #333;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    /* Navbar */
     .navbar {
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      background: white !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-
     .navbar-brand {
-      font-weight: 600;
+      color: var(--primary) !important;
+      font-size: 1.4rem;
     }
-
-    .nav-link.active {
-      font-weight: bold;
-      color: #0d6efd !important;
-      border-bottom: 2px solid #0d6efd;
+    .nav-link {
+      color: var(--nav-text) !important;
+      font-weight: 500;
+      margin: 0 0.75rem;
+      transition: color 0.3s, box-shadow 0.3s;
     }
-
-    .typing-animation {
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 3px solid black;
-      animation: typing 2.5s steps(17, end), blink 0.75s step-end infinite;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
+    .nav-link:hover, .nav-link.active {
+      color: var(--primary) !important;
+      box-shadow: inset 0 -2px 0 var(--primary);
     }
 
     .container-content {
-      max-width: 960px;
-      margin: auto;
+      max-width: 1000px;
+      margin: 2rem auto;
       padding: 2rem;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    /* Download Button */
+    .btn-download {
+      background: var(--primary);
+      color: white;
+      font-weight: 500;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 4px;
+      transition: box-shadow 0.3s;
+    }
+    .btn-download:hover {
+      box-shadow: 0 4px 12px var(--hover-shadow);
+    }
+
+    /* Skills Badges */
+    .badge {
+      background: var(--secondary);
+      color: white;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      margin: 3px;
+      display: inline-block;
     }
 
     footer {
       text-align: center;
-      padding: 2rem 0;
+      padding: 1.5rem 0;
       font-size: 0.9rem;
-      color: #888;
-    }
-    .technical-skills {
-        margin-top: 2rem;
-      }
-      
-      .skills-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 1rem;
-      }
-      .btn-download {
-        display: inline-block;
-        padding: 12px 30px;
-        background-color: #007BFF;  /* Bootstrap blue */
-        color: white;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 6px;
-        box-shadow: 0 4px 8px rgba(0,123,255,0.3);
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .btn-download:hover,
-    .btn-download:focus {
-        background-color: #0056b3;  /* Darker blue on hover */
-        box-shadow: 0 6px 12px rgba(0,86,179,0.5);
-        outline: none;
-        text-decoration: none;
+      color: #666;
+      background: #f1f1f1;
+      margin-top: 3rem;
     }
 
-    .badge {
-        background-color: #e0e0e0;
-        color: #333;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
+    @media (max-width: 768px) {
+      .container-content {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      h1 { font-size: 1.75rem; }
     }
-    
-    .badge:hover {
-        background-color: #007bff;
-        color: #fff;
-        cursor: default;
-    }
-    
-</style>
+  </style>
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+<nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand" href="{{ url_for('index') }}">Portfolio</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
+          <a class="nav-link {% if request.endpoint=='index' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.endpoint == 'cv' %}active{% endif %}" href="{{ url_for('cv') }}">CV</a>
+          <a class="nav-link {% if request.endpoint=='cv' %}active{% endif %}" href="{{ url_for('cv') }}">CV</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.endpoint == 'projects' %}active{% endif %}" href="{{ url_for('projects') }}">Projects</a>
+          <a class="nav-link {% if request.endpoint=='projects' %}active{% endif %}" href="{{ url_for('projects') }}">Projects</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a>
+          <a class="nav-link {% if request.endpoint=='contact' %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Main Content -->
 <div class="container container-content">
-  {% block content %}
-  {% endblock %}
+  {% block content %}{% endblock %}
 </div>
 
-<!-- Footer -->
 <footer>
-  &copy; {{ bio.name }} – {{ current_year }}. All rights reserved.
+  &copy; <span style="color: var(--primary)">{{ bio.name }}</span> – {{ current_year }}. All rights reserved.
 </footer>
 
-<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
