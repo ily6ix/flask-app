@@ -6,7 +6,7 @@ bio ={
 
 
 skills = [
-    "Java","Python", "JavaScript", "Flask", "React", "SQL", "Git", "Linux", "Data Structures", "OOP", "Algorithms"
+    "Java","Python", "JavaScript", "Flask", "React", "PL/SQL", "Git", "Linux", "Data Structures", "OOP", "Algorithms"
 ]
 tools = [
     "Netbeans","Android Studio","Visual Studio Code","UML", "Proteus", "MPLAB", "FIGMA", "VIRTUALBOX", "GitHub", "Linux"
