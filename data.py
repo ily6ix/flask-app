@@ -1,6 +1,6 @@
 bio ={
     "name": "Goitseone Rakgomo.",
-    "title": "Software Engineer, Fullstack Developer and Data Analyst ",
+    "title": "Software Engineer | Fullstack Developer | Data Analyst",
 }
 
 
