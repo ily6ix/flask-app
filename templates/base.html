@@ -1,148 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title><span class="text-primary">{{ bio.name }}</span> – Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Goitseone Rakgomo — Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌟</text></svg>">
+    <meta name="description" content="Portfolio of Goitseone Rakgomo — software engineer building robust, user-friendly web apps.">
+  </head>
+  <body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-root-margin="0px 0px -40%" tabindex="0">
+    <nav id="mainNav" class="navbar navbar-expand-lg navbar-dark fixed-top border-bottom border-opacity-10">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('home') }}">GR<span class="text-primary">.</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navBar">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item ms-lg-2">
+              <form method="post" action="{{ url_for('admin_logout') }}">
+                {% if session.get('admin_logged_in') %}
+                <button class="btn btn-sm btn-outline-light">Logout</button>
+                {% else %}
+                <a class="btn btn-sm btn-accent px-3" href="{{ url_for('admin_login') }}">Admin</a>
+                {% endif %}
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <div class="container position-fixed top-0 start-50 translate-middle-x mt-5" style="z-index:1080; max-width:640px;">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    {% endwith %}
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    {% block content %}{% endblock %}
 
-  <style>
-    :root {
-      --primary: #2a66cc;         /* new bright blue */
-      --secondary: #4a5a7b;       /* muted navy */
-      --dark: #1f2937;
-      --light: #f7f7f7;
-      --nav-text: #224b8e;        /* navy blue for nav items */
-      --hover-shadow: rgba(42, 102, 204, 0.4); /* lighter navy shadow */
-    }
+    <footer class="footer py-4 mt-5">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <p class="m-0">© {{ 2025 }} Goitseone Rakgomo</p>
+        <ul class="nav gap-3">
+          <li><a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a></li>
+          <li><a href="https://linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+          <li><a href="mailto:youremail@gmail.com"><i class="fas fa-envelope"></i></a></li>
+        </ul>
+      </div>
+    </footer>
+    
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: var(--light);
-      color: #333;
-      margin: 0;
-      padding-top: 70px;
-    }
 
-    h1, h2, h3, .navbar-brand {
-      color: #333;
-      font-family: 'Playfair Display', serif;
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
 
-    /* Navbar */
-    .navbar {
-      background: white !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-    .navbar-brand {
-      color: var(--primary) !important;
-      font-size: 1.4rem;
-    }
-    .nav-link {
-      color: var(--nav-text) !important;
-      font-weight: 500;
-      margin: 0 0.75rem;
-      transition: color 0.3s, box-shadow 0.3s;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: var(--primary) !important;
-      box-shadow: inset 0 -2px 0 var(--primary);
-    }
+<!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    .container-content {
-      max-width: 1000px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    /* Download Button */
-    .btn-download {
-      background: var(--primary);
-      color: white;
-      font-weight: 500;
-      padding: 10px 24px;
-      border: none;
-      border-radius: 4px;
-      transition: box-shadow 0.3s;
-    }
-    .btn-download:hover {
-      box-shadow: 0 4px 12px var(--hover-shadow);
-    }
-
-    /* Skills Badges */
-    .badge {
-      background: var(--secondary);
-      color: white;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      padding: 6px 12px;
-      margin: 3px;
-      display: inline-block;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem 0;
-      font-size: 0.9rem;
-      color: #666;
-      background: #f1f1f1;
-      margin-top: 3rem;
-    }
-
-    @media (max-width: 768px) {
-      .container-content {
-        margin: 1rem;
-        padding: 1rem;
-      }
-      h1 { font-size: 1.75rem; }
-    }
-  </style>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg fixed-top">
-  <div class="container">
-    <a class="navbar-brand" href="{{ url_for('index') }}">Portfolio</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link {% if request.endpoint=='index' %}active{% endif %}" href="{{ url_for('index') }}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.endpoint=='cv' %}active{% endif %}" href="{{ url_for('cv') }}">CV</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.endpoint=='projects' %}active{% endif %}" href="{{ url_for('projects') }}">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.endpoint=='contact' %}active{% endif %}" href="{{ url_for('contact') }}">Contact</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-<div class="container container-content">
-  {% block content %}{% endblock %}
-</div>
-
-<footer>
-  &copy; <span style="color: var(--primary)">{{ bio.name }}</span> – {{ current_year }}. All rights reserved.
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
 </html>

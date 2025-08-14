@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section">
+  <div class="container" style="max-width:560px;">
+    <h1 class="h3 mb-3">Admin Login</h1>
+    <form method="post" action="{{ url_for('admin_login_post', next=request.args.get('next')) }}">
+      <div class="mb-3">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button class="btn btn-accent">Login</button>
+    </form>
+  </div>
+</section>
+{% endblock %}
